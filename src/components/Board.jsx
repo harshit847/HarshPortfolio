@@ -9,6 +9,13 @@ const getRandomPosition = () => ({
     y: Math.floor(Math.random() * BOARD_SIZE),
 });
 
+const changeDirection = (dir) => {
+    if (dir === "UP" && direction !== "DOWN") setDirection("UP");
+    if (dir === "DOWN" && direction !== "UP") setDirection("DOWN");
+    if (dir === "LEFT" && direction !== "RIGHT") setDirection("LEFT");
+    if (dir === "RIGHT" && direction !== "LEFT") setDirection("RIGHT");
+};
+
 const SnakeGame = () => {
     const [snake, setSnake] = useState(INITIAL_SNAKE);
     const [food, setFood] = useState(getRandomPosition());
@@ -63,7 +70,7 @@ const SnakeGame = () => {
     useEffect(() => {
         const handleKey = (e) => {
             if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
-                e.preventDefault(); 
+                e.preventDefault();
             }
             switch (e.key) {
                 case "ArrowUp": if (direction !== "DOWN") setDirection("UP"); break;
@@ -101,6 +108,15 @@ const SnakeGame = () => {
                         ></div>
                     );
                 })}
+            </div>
+            {/* Mobile controls */}
+            <div className="mt-4 sm:hidden flex flex-col items-center space-y-2">
+                <button onClick={() => changeDirection("UP")} className="bg-gray-800 text-white px-4 py-2 rounded">⬆️</button>
+                <div className="flex space-x-4">
+                    <button onClick={() => changeDirection("LEFT")} className="bg-gray-800 text-white px-4 py-2 rounded">⬅️</button>
+                    <button onClick={() => changeDirection("DOWN")} className="bg-gray-800 text-white px-4 py-2 rounded">⬇️</button>
+                    <button onClick={() => changeDirection("RIGHT")} className="bg-gray-800 text-white px-4 py-2 rounded">➡️</button>
+                </div>
             </div>
             {gameOver && <p className="text-red-600 font-semibold">Game Over!</p>}
             <h1 className="font-edu font-semibold text-indigo-400">Your Score : {snake.length}</h1>
