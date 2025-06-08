@@ -9,12 +9,6 @@ const getRandomPosition = () => ({
     y: Math.floor(Math.random() * BOARD_SIZE),
 });
 
-const changeDirection = (dir) => {
-    if (dir === "UP" && direction !== "DOWN") setDirection("UP");
-    if (dir === "DOWN" && direction !== "UP") setDirection("DOWN");
-    if (dir === "LEFT" && direction !== "RIGHT") setDirection("LEFT");
-    if (dir === "RIGHT" && direction !== "LEFT") setDirection("RIGHT");
-};
 
 const SnakeGame = () => {
     const [snake, setSnake] = useState(INITIAL_SNAKE);
@@ -29,6 +23,13 @@ const SnakeGame = () => {
         setGameOver(false);
     };
 
+    const changeDirection = (dir) => {
+        if (dir === "UP" && direction !== "DOWN") setDirection("UP");
+        if (dir === "DOWN" && direction !== "UP") setDirection("DOWN");
+        if (dir === "LEFT" && direction !== "RIGHT") setDirection("LEFT");
+        if (dir === "RIGHT" && direction !== "LEFT") setDirection("RIGHT");
+    };
+
 
     useEffect(() => {
         if (gameOver) return;
@@ -36,7 +37,6 @@ const SnakeGame = () => {
         const move = () => {
             const head = { ...snake[0] };
 
-            // Update head with wraparound
             switch (direction) {
                 case "UP": head.y = (head.y - 1 + BOARD_SIZE) % BOARD_SIZE; break;
                 case "DOWN": head.y = (head.y + 1) % BOARD_SIZE; break;
@@ -45,7 +45,6 @@ const SnakeGame = () => {
                 default: break;
             }
 
-            // Self collision check
             if (snake.some(s => s.x === head.x && s.y === head.y)) {
                 setGameOver(true);
                 return;
@@ -53,7 +52,6 @@ const SnakeGame = () => {
 
             const newSnake = [head, ...snake];
 
-            // Eat food
             if (head.x === food.x && head.y === food.y) {
                 setFood(getRandomPosition());
             } else {
@@ -109,7 +107,6 @@ const SnakeGame = () => {
                     );
                 })}
             </div>
-            {/* Mobile controls */}
             <div className="mt-4 sm:hidden flex flex-col items-center space-y-2">
                 <button onClick={() => changeDirection("UP")} className="bg-gray-800 text-white px-4 py-2 rounded">⬆️</button>
                 <div className="flex space-x-4">
