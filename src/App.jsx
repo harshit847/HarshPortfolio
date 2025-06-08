@@ -9,7 +9,7 @@ import ContactSection from './components/Contact';
 
 function App() {
   return (
-    <div className='w-full min-h-screen text-white bg-zinc-900 scroll-smooth'>
+    <div className='w-full min-h-screen overflow-x-hidden text-white bg-zinc-900 scroll-smooth'>
       <Navbar />
 
       <div id="home">
